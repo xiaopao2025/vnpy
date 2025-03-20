@@ -62,8 +62,8 @@ RUN python3 -m pip install -r requirements.txt --index $PYPI_INDEX \
     && unzip /home/ubuntu/twsapi_macunix.1030.01.zip \
     && unzip /home/ubuntu/twsapi_macunix.1030.01.zip -d /home/ubuntu/twsapi \
     && cd /home/ubuntu/twsapi/IBJts/source/pythonclient \
-    && python3 setup.py install \
-    && pip install vnpy_ib
+    && sudo python3 setup.py install \
+    && python3 -m pip install vnpy_ib
 
 # 
 COPY --chown=ubuntu:ubuntu . .
