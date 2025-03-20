@@ -8,6 +8,7 @@ ENV DOCKER_CMD=startvnc.sh
 USER root
 RUN apt-get update && apt-get install -y \
     wget \
+    unzip \
     build-essential \
     python3-pip \
     fonts-wqy-zenhei \
@@ -56,6 +57,13 @@ COPY --chown=ubuntu:ubuntu requirements.txt .
 RUN python3 -m pip install -r requirements.txt --index $PYPI_INDEX \
     && echo 'export QT_SELECT=qt5' >> /home/ubuntu/.bashrc \
     && echo 'export QT_SELECT=qt5' >> /home/ubuntu/.zshrc \
+    #IbGateway
+    && wget -P /home/ubuntu/ https://interactivebrokers.github.io/downloads/twsapi_macunix.1030.01.zip \
+    && unzip /home/ubuntu/twsapi_macunix.1030.01.zip \
+    && unzip /home/ubuntu/twsapi_macunix.1030.01.zip -d /home/ubuntu/twsapi \
+    && cd /home/ubuntu/twsapi/IBJts/source/pythonclient \
+    && python3 setup.py install \
+    && pip install vnpy_ib
 
 # 
 COPY --chown=ubuntu:ubuntu . .
