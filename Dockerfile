@@ -10,6 +10,12 @@ RUN apt-get update && apt-get install -y \
     wget \
     build-essential \
     python3-pip \
+    fonts-wqy-zenhei \
+    fonts-wqy-microhei \
+    fonts-noto-cjk \
+    libxcb-xinerama0 \
+    qtbase5-dev \
+    qtchooser \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -47,7 +53,9 @@ RUN python3 -m pip install ta-lib==0.4.24 --index $PYPI_INDEX
 
 # 
 COPY --chown=ubuntu:ubuntu requirements.txt .
-RUN python3 -m pip install -r requirements.txt --index $PYPI_INDEX
+RUN python3 -m pip install -r requirements.txt --index $PYPI_INDEX \
+    && echo 'export QT_SELECT=qt5' >> /home/ubuntu/.bashrc \
+    && echo 'export QT_SELECT=qt5' >> /home/ubuntu/.zshrc \
 
 # 
 COPY --chown=ubuntu:ubuntu . .
